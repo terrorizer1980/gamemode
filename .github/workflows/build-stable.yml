@@ -9,6 +9,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'main'
+          
+      - name: Get release version
+        working-directory: /home/runner/work/gamemode
+        id: vars
+        run: |
+          gamemode_version=$(cat VERSION)
+          echo "::set-output name=release_version::${gamemode_version}"
+          
       - name: Fetching Build Tools
         working-directory: /home/runner/work/
         run: git clone https://github.com/bottlesdevs/build-tools.git
@@ -28,13 +39,6 @@ jobs:
       - name: Launch package.sh
         working-directory: /home/runner/work/build-tools/gamemode
         run: ./package.sh
-
-      - name: Get release version
-        working-directory: /home/runner/work/gamemode/dist
-        id: vars
-        run: |
-          wine_version=$(cat VERSION)
-          echo "::set-output name=release_version::${wine_version}"
         
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
