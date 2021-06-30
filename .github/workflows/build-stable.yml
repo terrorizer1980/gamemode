@@ -1,0 +1,51 @@
+name: build-stable
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'main'
+
+      - name: Fetching Build Tools
+        working-directory: /home/runner/work/
+        run: git clone https://github.com/bottlesdevs/build-tools.git
+      
+      - name: Make build scripts executable
+        working-directory: /home/runner/work/build-tools/runners/chardonnay
+        run: chmod +x *
+      
+      - name: Launch environment.sh
+        working-directory: /home/runner/work/build-tools/gamemode
+        run: ./environment.sh
+      
+      - name: Launch build.sh
+        working-directory: /home/runner/work/build-tools/gamemode
+        run: ./build.sh
+      
+      - name: Launch package.sh
+        working-directory: /home/runner/work/build-tools/gamemode
+        run: ./package.sh
+
+      - name: Get release version
+        working-directory: /home/runner/work/gamemode/dist
+        id: vars
+        run: |
+          wine_version=$(cat VERSION)
+          echo "::set-output name=release_version::${wine_version}"
+        
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          draft: false
+          prerelease: false
+          automatic_release_tag: "${{ steps.vars.outputs.release_version }}"
+          title: "Chardonnay ${{ steps.vars.outputs.release_version }}"
+          files: "/home/runner/work/gamemode/gamemode-${{ steps.vars.outputs.release_version }}.tar.gz"
+          
