@@ -9,10 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: 'main'
-
       - name: Fetching Build Tools
         working-directory: /home/runner/work/
         run: git clone https://github.com/bottlesdevs/build-tools.git
