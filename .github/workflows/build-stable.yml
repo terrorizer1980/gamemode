@@ -38,7 +38,7 @@ jobs:
       
       - name: Launch package.sh
         working-directory: /home/runner/work/build-tools/gamemode
-        run: ./package.sh
+        run: ./package.sh -r ${{ steps.vars.outputs.release_version }}
         
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
