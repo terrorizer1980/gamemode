@@ -14,7 +14,7 @@ jobs:
           ref: 'main'
           
       - name: Get release version
-        working-directory: /home/runner/work/gamemode
+        working-directory: /home/runner/work/gamemode/gamemode
         id: vars
         run: |
           gamemode_version=$(cat VERSION)
