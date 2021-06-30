@@ -18,7 +18,7 @@ jobs:
         run: git clone https://github.com/bottlesdevs/build-tools.git
       
       - name: Make build scripts executable
-        working-directory: /home/runner/work/build-tools/runners/chardonnay
+        working-directory: /home/runner/work/build-tools/gamemode
         run: chmod +x *
       
       - name: Launch environment.sh
