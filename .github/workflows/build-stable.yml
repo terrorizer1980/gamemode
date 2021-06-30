@@ -23,7 +23,7 @@ jobs:
       
       - name: Launch build.sh
         working-directory: /home/runner/work/build-tools/gamemode
-        run: ./build.sh
+        run: ./build.sh -r ${{ steps.vars.outputs.release_version }}
       
       - name: Launch package.sh
         working-directory: /home/runner/work/build-tools/gamemode
