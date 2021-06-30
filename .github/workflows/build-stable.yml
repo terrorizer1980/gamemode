@@ -46,6 +46,6 @@ jobs:
           draft: false
           prerelease: false
           automatic_release_tag: "${{ steps.vars.outputs.release_version }}"
-          title: "Chardonnay ${{ steps.vars.outputs.release_version }}"
+          title: "${{ steps.vars.outputs.release_version }}"
           files: "/home/runner/work/gamemode/gamemode-${{ steps.vars.outputs.release_version }}.tar.gz"
           
